@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calculate GCS - Glasgow Coma Scale</title>
+  <style>
+      body { 
+          font-family: 'Arial', sans-serif; 
+          margin: 0; 
+          padding: 0; 
+          background: linear-gradient(to right, #fdfdfd, #fdfdfd); /* Soft blue gradient */
+          display: flex; 
+          flex-direction: column; 
+          height: 100vh; 
+          color: #333; /* Dark text for readability */
+      }
+      .header { 
+          background-color: #0d47a1; /* Darker blue color */
+          height: 100px; 
+          display: flex; 
+          flex-direction: column; 
+          justify-content: center; 
+          align-items: center; 
+          color: white; 
+          font-size: 28px; 
+          font-weight: bold; 
+          box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2); /* Subtle shadow */
+      }
+      .logo {
+
+        max-height: 80px; /* Increased height for better visibility */
+        margin-bottom: -7px; /* Increased space below the logo */
+  width:4%;
+  height: auto;
+}
+      .orange-bar {
+          background-color: #ff9800; /* Bright orange */
+          height: 60px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          color: white;
+          font-size: 28px; /* Increased font size for legibility */
+          font-weight: bold; /* Bold font for emphasis */
+          margin: 10px 0; /* Added margin for spacing */
+          border-radius: 5px; 
+          box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Subtle shadow */
+      }
+      .content { 
+          flex: 1; 
+          display: flex; 
+          justify-content: space-between; 
+          align-items: center; 
+          flex-direction: column; 
+          padding: 20px; 
+      }
+      h2 {
+          color: #0d47a1; /* Dark blue for headings */
+          margin-bottom: 20px; /* Spacing below headings */
+      }
+      .columns {
+          display: flex; 
+          justify-content: space-around; 
+          width: 60%; 
+          margin: 20px 20; 
+      }
+      .column {
+          flex: 1; 
+          margin: 5 10px; 
+          text-align: center; 
+      }
+      img {
+          width: 80%; /* Responsive image size */
+          border: 6px solid transparent; 
+          border-radius: 5px; 
+          cursor: pointer; 
+          transition: border-color 0.3s; /* Smooth transition */
+      }
+      img.selected {
+    border-color: #07de1d; /* Highlight color for selected image */
+}
+      img:hover {
+          border-color: #06cb34; /* Highlight on hover */
+      }
+      .feedback {
+          margin-top: 10px; 
+          color: #19d225; /* Color for feedback text */
+          font-weight: bold; 
+      }
+      button { 
+          padding: 15px; 
+          font-size: 20px; 
+          background-color: #1976d2; /* Darker blue */
+          color: white; 
+          border: 15; 
+          border-radius: 5px; 
+          cursor: pointer; 
+          transition: background-color 0.3s, transform 0.3s; /* Smooth transition */
+          box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Button shadow */
+      }
+      button:hover {
+          background-color: #0d47a1; /* Even darker blue on hover */
+          transform: scale(1.05); /* Slight zoom effect */
+      }
+      .footer { 
+          background-color: #0d47a1; /* Darker blue */
+          height: 50px; 
+          display: flex; 
+          justify-content: center; 
+          align-items: center; 
+          color: white; 
+          position: relative; 
+          bottom: 0; 
+          width: 100%; 
+      }
+      .alert {
+            display: none;
+            position: fixed;
+            top: 20%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            padding: 20px;
+            border-radius: 8px;
+            color: white;
+            font-size: 20px;
+            z-index: 1000;
+        }
+        .mild {
+            background-color: green;
+        }
+        .moderate {
+            background-color: orange;
+        }
+        .severe {
+            background-color: red;
+        }
+        .hidden {
+            display: none;
+        }
+  </style>
+</head>
+<body>
+
+    <!-- Header Bar with Logo -->
+    <div class="header">
+        <img src="Untitled-1.png" alt="Logo" class="logo"> 
+        Glasgow Coma Scale Application
+    </div>
+  
+    <!-- Orange Bar with Title -->
+    <div class="orange-bar">
+        Calculate GCS
+    </div>
+  
+    <!-- Calculation Form -->
+    <div class="content">
+        <div class="columns">
+            <!-- Eye Response Column -->
+            <div class="column">
+                <h3>پاسخ چشمی</h3>
+                <img src="eye4.jpg" alt="Eye Response 4" onclick="selectImage(this, 'Eye Response 4 selected', 'eye')">
+                <img src="eye 3.jpg" alt="Eye Response 3" onclick="selectImage(this, 'Eye Response 3 selected', 'eye')">
+                <img src="eye2.jpg" alt="Eye Response 2" onclick="selectImage(this, 'Eye Response 2 selected', 'eye')">
+                <img src="eye1.jpg" alt="Eye Response 1" onclick="selectImage(this, 'Eye Response 1 selected', 'eye')">
+                <div class="feedback" id="eyeFeedback"></div>
+            </div>
+            <!-- Verbal Response Column -->
+            <div class="column">
+                <h3>پاسخ کلامی</h3>
+                <img src="verbal 5.jpg" alt="Verbal Response 5" onclick="selectImage(this, 'Verbal Response 5 selected', 'verbal')">
+                <img src="verbal 4.jpg" alt="Verbal Response 4" onclick="selectImage(this, 'Verbal Response 4 selected', 'verbal')">
+                <img src="verbal 3.jpg" alt="Verbal Response 3" onclick="selectImage(this, 'Verbal Response 3 selected', 'verbal')">
+                <img src="verbal 2.jpg" alt="Verbal Response 2" onclick="selectImage(this, 'Verbal Response 2 selected', 'verbal')">
+                <img src="verbal 1.jpg" alt="Verbal Response 1" onclick="selectImage(this, 'Verbal Response 1 selected', 'verbal')">
+                <div class="feedback" id="verbalFeedback"></div>
+            </div>
+            <!-- Motor Response Column -->
+            <div class="column">
+                <h3>پاسخ حرکتی</h3>
+                <img src="motor 6.jpg" alt="Motor Response 6" onclick="selectImage(this, 'Motor Response 6 selected', 'motor')">
+                <img src="motor 5.jpg" alt="Motor Response 5" onclick="selectImage(this, 'Motor Response 5 selected', 'motor')">
+                <img src="motor 4.jpg" alt="Motor Response 4" onclick="selectImage(this, 'Motor Response 4 selected', 'motor')">
+                <img src="motor 3.jpg" alt="Motor Response 3" onclick="selectImage(this, 'Motor Response 3 selected', 'motor')">
+                <img src="motor 2.jpg" alt="Motor Response 2" onclick="selectImage(this, 'Motor Response 2 selected', 'motor')">
+                <img src="motor1.jpg" alt="Motor Response 1" onclick="selectImage(this, 'Motor Response 1 selected', 'motor')">
+                <div class="feedback" id="motorFeedback"></div>
+            </div>
+        </div>
+  
+        <!-- Back Button -->
+        <button class="button back" onclick="goBack()">بازگشت</button>
+  
+        <!-- Alarm Notification Area -->
+        <div id="alarmNotification" class="alarm" style="display:none;"></div>
+    </div>
+  
+    <!-- Footer Bar -->
+    <div class="footer">
+        © 2024 Glasgow Coma Scale Application
+    </div>
+  
+    <style>
+        /* Alarm Notification Styles */
+        .alarm {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: bold;
+        }
+        .alert.green {
+            background-color: lightgreen;
+            color: black;
+        }
+        .alert.yellow {
+            background-color: lightyellow;
+            color: black;
+        }
+        .alert.red {
+            background-color: lightcoral;
+            color: black;
+        }
+        .button {
+            margin-top: 10px;
+            padding: 5px 10px;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            margin-right: 5px; /* Add some space between buttons */
+        }
+        .button.recalculate {
+            background-color: #007BFF; /* Blue */
+        }
+        .button.save {
+            background-color: #28A745; /* Green */
+        }
+        .button.back {
+            background-color: #DC3545; /* Red */
+        }
+    </style>
+  
+    <script>
+        let eyeScore = 0;
+        let verbalScore = 0;
+        let motorScore = 0;
+        let patientName = '';
+  
+        function selectImage(img, message, type) {
+            const column = img.closest('.column');
+            const feedbackId = column.querySelector('.feedback').id;
+  
+            // Check if the image is already selected
+            if (img.style.borderColor === 'rgb(25, 118, 210)') {
+                return; // If already selected, do nothing
+            }
+  
+            // Deselect previously selected image in the same column
+            const previouslySelected = column.querySelector('img[style*="border-color: rgb(25, 118, 210)"]');
+            if (previouslySelected) {
+                previouslySelected.style.borderColor = 'transparent'; // Deselect
+                previouslySelected.style.pointerEvents = 'auto'; // Enable interaction
+                previouslySelected.style.opacity = '1'; // Reset opacity
+            }
+  
+            // Highlight newly selected image
+            img.style.borderColor = '#1976d2'; // Change border color to indicate selection
+  
+            // Update feedback message
+            document.getElementById(feedbackId).innerText = message;
+  
+            // Update scores based on the image clicked
+            if (type === 'eye') {
+                eyeScore = getScoreFromImage(img.alt);
+            } else if (type === 'verbal') {
+                verbalScore = getScoreFromImage(img.alt);
+            } else if (type === 'motor') {
+                motorScore = getScoreFromImage(img.alt);
+            }
+  
+            // Freeze other options in the same column
+            freezeColumn(column);
+  
+            // Check if all three scores are selected before calculating GCS
+            if (eyeScore > 0 && verbalScore > 0 && motorScore > 0) {
+                calculateGCS();
+            }
+        }
+  
+        function freezeColumn(column) {
+            const images = column.querySelectorAll('img');
+            images.forEach(image => {
+                if (image.style.borderColor !== 'rgb(25, 118, 210)') {
+                    image.style.pointerEvents = 'none'; // Disable interaction
+                    image.style.opacity = '0.5'; // Make unselected images look disabled
+                }
+            });
+        }
+  
+        function getScoreFromImage(altText) {
+            // Extract score from the image alt text
+            const score = parseInt(altText.match(/\d+/)[0]); // Get the first number from the alt text
+            return score || 0; // Return 0 if no score found
+        }
+  
+        function calculateGCS() {
+            const startTime = performance.now(); // Start time for calculation
+
+            const totalGCS = eyeScore + verbalScore + motorScore;
+            let alertMessage = '';
+            let alertClass = '';
+
+            if (totalGCS > 12) {
+                alertClass = 'alert green';
+                alertMessage = `Mild Alarm: Score is ${totalGCS}`;
+            } else if (totalGCS > 7) {
+                alertClass = 'alert yellow';
+                alertMessage = `Moderate Alarm: Score is ${totalGCS}`;
+            } else {
+                alertClass = 'alert red';
+                alertMessage = `Severe Alarm: Score is ${totalGCS}`;
+            }
+  
+           
+  
+            // Display the alarm notification
+            const alarmNotification = document.getElementById('alarmNotification');
+            alarmNotification.className = `alarm ${alertClass}`; // Set alarm class
+            alarmNotification.innerHTML = `
+                ${alertMessage}<br>
+                <br>
+                <button class="button recalculate" onclick="recalculate()">محاسبه دوباره</button>
+                <button class="button save" onclick="openSaveModal()">ذخیره</button>
+            `; // Set alarm message with buttons
+            alarmNotification.style.display = 'block'; // Show the notification
+        }
+  
+        function openSaveModal() {
+            const nameInput = prompt("نام بیمار را وارد کنید:");
+            if (nameInput) {
+                patientName = nameInput; // Save the patient's name
+                alert(`Changes saved for patient: ${patientName}`);
+            } else {
+                alert('Please enter a patient name to save changes.');
+            }
+        }
+  
+        function recalculate() {
+            eyeScore = 0;
+            verbalScore = 0;
+            motorScore = 0;
+            document.getElementById('alarmNotification').style.display = 'none'; // Hide notification
+  
+            // Reset all images
+            const allImages = document.querySelectorAll('.column img');
+            allImages.forEach(image => {
+                image.style.borderColor = 'transparent'; // Reset border color
+                image.style.pointerEvents = 'auto'; // Enable interaction
+                image.style.opacity = '1'; // Reset opacity
+            });
+  
+            // Reset feedback messages
+            const feedbacks = document.querySelectorAll('.feedback');
+            feedbacks.forEach(feedback => feedback.innerText = '');
+        }
+  
+        function goBack() {
+            window.location.href = 'index.html'; // Redirect to the main page
+        }
+    </script>
+</body>
+

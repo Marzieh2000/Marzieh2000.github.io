@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Glasgow Coma Scale</title>
+  <style>
+      body { 
+          font-family: 'Arial', sans-serif; 
+          margin: 0; 
+          padding: 0; 
+          background: linear-gradient(to right, #e3f2fd, #bbdefb); /* Soft blue gradient */
+          display: flex; 
+          flex-direction: column; 
+          height: 100vh; 
+          color: #333; /* Dark text for readability */
+      }
+      .header { 
+          background-color: #0d47a1; /* Darker blue color */
+          height: 100px; 
+          display: flex; 
+          flex-direction: column; 
+          justify-content: center; 
+          align-items: center; 
+          color: white; 
+          font-size: 28px; 
+          font-weight: bold; 
+          box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2); /* Subtle shadow */
+      }
+      
+      .logo {
+
+          max-height: 80px; /* Increased height for better visibility */
+          margin-bottom: -7px; /* Increased space below the logo */
+      }
+      .orange-bar {
+          background-color: #ff9800; /* Bright orange */
+          height: 60px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          color: white;
+          font-size: 28px; /* Increased font size for legibility */
+          font-weight: bold; /* Bold font for emphasis */
+          margin: 10px 0; /* Added margin for spacing */
+          border-radius: 5px; 
+          box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Subtle shadow */
+      }
+      .content { 
+          flex: 1; 
+          display: flex; 
+          justify-content: center; 
+          align-items: center; 
+          flex-direction: column; 
+          display: none; /* Hide all content by default */
+          text-align: center; 
+          padding: 20px; 
+      }
+      .active { 
+          display: flex; /* Show active content */
+      }
+      .button-container {
+          position: relative; 
+          display: inline-block; 
+          margin: 20px 0; 
+      }
+      .button-tape {
+          position: absolute; 
+          top: -10px; 
+          left: -10px; 
+          right: -10px; 
+          bottom: -10px; 
+          background-color: #ff9800; /* Orange tape color */
+          z-index: -1; /* Behind the button */
+          border-radius: 10px; /* Rounded edges for tape */
+          box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Shadow for tape */
+      }
+      button { 
+          position: relative; 
+          padding: 15px; 
+          font-size: 20px; 
+          width: 240px; 
+          background-color: #1976d2; /* Darker blue */
+          color: white; 
+          border: none; 
+          border-radius: 5px; 
+          cursor: pointer; 
+          transition: background-color 0.3s, transform 0.3s; /* Smooth transition */
+          box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Button shadow */
+          z-index: 1; /* Above the tape */
+      }
+      button:hover {
+          background-color: #0d47a1; /* Even darker blue on hover */
+          transform: scale(1.05); /* Slight zoom effect */
+      }
+      h2 {
+          color: #0d47a1; /* Dark blue for headings */
+          margin-bottom: 20px; /* Spacing below headings */
+      }
+      .footer { 
+          background-color: #0d47a1; /* Darker blue */
+          height: 50px; 
+          display: flex; 
+          justify-content: center; 
+          align-items: center; 
+          color: white; 
+          position: relative; 
+          bottom: 0; 
+          width: 100%; 
+      }
+  </style>
+</head>
+<body>
+
+  <!-- Header Bar with Logo -->
+  <div class="header">
+      <img src="Untitled-1.png" alt="Logo" class="logo"> <!-- Replace with actual logo path -->
+      Glasgow Coma Scale Application
+  </div>
+
+  <!-- Orange Bar with Title -->
+  <div class="orange-bar">
+      GCS Overview
+  </div>
+
+  <!-- Main Content Area -->
+  <div class="content active" id="mainPage">
+      <div class="button-container">
+          <div class="button-tape"></div>
+          <button onclick="window.location.href='calculator.html'">محاسبه</button>
+      </div>
+      <div class="button-container">
+          <div class="button-tape"></div>
+          <div class="button-tape"></div>
+          <button onclick="window.location.href='inform.html'">اطلاعات بیماران</button>
+      </div>
+      </div>
+  </div>
+
+ 
+  <!-- Patient Information Page -->
+  <div class="content" id="patientInfoPage">
+      <h2>Patient Information</h2>
+      <p>Enter patient information such as name, age, and medical history.</p>
+      <!-- Add form or input fields here -->
+      <button onclick="showPage('main')">Back to Main</button>
+  </div>
+
+  <!-- Footer Bar -->
+  <div class="footer">
+      © 2024 Glasgow Coma Scale Application
+  </div>
+
+  <script>
+      function showPage(page) {
+          // Hide all content
+          const pages = document.querySelectorAll('.content');
+          pages.forEach(p => p.classList.remove('active'));
+
+          // Show the selected page
+          if (page === 'calculator') {
+              document.getElementById('calculatorPage').classList.add('active');
+          } else if (page === 'patientInfo') {
+              document.getElementById('patientInfoPage').classList.add('active');
+          } else {
+              document.getElementById('mainPage').classList.add('active');
+          }
+      }
+  </script>
+
+</body>

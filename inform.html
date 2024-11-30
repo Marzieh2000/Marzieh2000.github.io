@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Patient Information - Glasgow Coma Scale</title>
+  <style>
+      body { 
+          font-family: 'Arial', sans-serif; 
+          margin: 0; 
+          padding: 0; 
+          background: linear-gradient(to right, #e3f2fd, #bbdefb); /* Soft blue gradient */
+          display: flex; 
+          flex-direction: column; 
+          height: 100vh; 
+          color: #333; /* Dark text for readability */
+      }
+      .header { 
+          background-color: #0d47a1; /* Darker blue color */
+          height: 100px; 
+          display: flex; 
+          flex-direction: column; 
+          justify-content: center; 
+          align-items: center; 
+          color: white; 
+          font-size: 28px; 
+          font-weight: bold; 
+          box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2); /* Subtle shadow */
+      }
+      .logo { 
+          max-height: 80px; /* Increased height for better visibility */
+          margin-bottom: -7px; /* Increased space below the logo */
+      }
+      .orange-bar {
+          background-color: #ff9800; /* Bright orange */
+          height: 60px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          color: white;
+          font-size: 28px; /* Increased font size for legibility */
+          font-weight: bold; /* Bold font for emphasis */
+          margin: 10px 0; /* Added margin for spacing */
+          border-radius: 5px; 
+          box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Subtle shadow */
+      }
+      .content { 
+          flex: 1; 
+          display: flex; 
+          justify-content: center; 
+          align-items: center; 
+          flex-direction: column; 
+          padding: 20px; 
+      }
+      h2 {
+          color: #0d47a1; /* Dark blue for headings */
+          margin-bottom: 20px; /* Spacing below headings */
+      }
+      form {
+          display: flex; 
+          flex-direction: column; 
+          width: 300px; /* Fixed width for form */
+      }
+      input, textarea {
+          margin: 10px 0; 
+          padding: 10px; 
+          border: 1px solid #ccc; 
+          border-radius: 5px; 
+          font-size: 16px; 
+      }
+      button { 
+          padding: 15px; 
+          font-size: 20px; 
+          background-color: #1976d2; /* Darker blue */
+          color: white; 
+          border: 15; 
+          border-radius: 5px; 
+          cursor: pointer; 
+          transition: background-color 0.3s, transform 0.3s; /* Smooth transition */
+          box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Button shadow */
+      }
+      button:hover {
+          background-color: #0d47a1; /* Even darker blue on hover */
+          transform: scale(1.05); /* Slight zoom effect */
+      }
+      .footer { 
+          background-color: #0d47a1; /* Darker blue */
+          height: 50px; 
+          display: flex; 
+          justify-content: center; 
+          align-items: center; 
+          color: white; 
+          position: relative; 
+          bottom: 0; 
+          width: 100%; 
+      }
+  </style>
+</head>
+<body>
+
+  <!-- Header Bar with Logo -->
+  <div class="header">
+      <img src="Untitled-1.png" alt="Logo" class="logo"> <!-- Replace with actual logo path -->
+      Glasgow Coma Scale Application
+  </div>
+
+  <!-- Orange Bar with Title -->
+  <div class="orange-bar">
+      Patient Information
+  </div>
+
+  <!-- Patient Information Form -->
+  <div class="content">
+      <h2>اطلاعات بیمار را وارد کنید</h2>
+      <form>
+          <input type="text" placeholder="Name" required>
+          <input type="number" placeholder="Age" required>
+          <textarea placeholder="Medical History" rows="4" required></textarea>
+          <button type="submit">ذخیره</button>
+      </form>
+      <div class="button-tape"></div>
+          <button onclick="window.location.href='index.html'">بازگشت</button>
+  </div>
+
+  <!-- Footer Bar -->
+  <div class="footer">
+      © 2024 Glasgow Coma Scale Application
+  </div>
+
+  <script>
+      function showPage(page) {
+          // Hide all content
+          const pages = document.querySelectorAll('.content');
+          pages.forEach(p => p.classList.remove('active'));
+
+          // Show the selected page
+          if (page === 'main') {
+              document.getElementById('mainPage').classList.add('active');
+          }
+      }
+  </script>
+
+</body>
+</html>
+
